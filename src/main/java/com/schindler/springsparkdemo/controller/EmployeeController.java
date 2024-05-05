@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/employee")
 @RestController
@@ -25,5 +27,16 @@ public class EmployeeController {
     @GetMapping("/find/{id}")
     public ResponseEntity<Employee> findEmployeeById(@PathVariable final long id) {
         return new ResponseEntity<>(employeeService.getEmployeeById(id), HttpStatus.OK);
+    }
+
+    @GetMapping("/find-all")
+    public ResponseEntity<List<Employee>> findAllEmployees() {
+        return new ResponseEntity<>(employeeService.getAllEmployees(), HttpStatus.OK);
+    }
+
+    @PutMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteEmployee(@PathVariable final long id) {
+        employeeService.deleteEmployee(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

@@ -15,7 +15,7 @@ import java.util.List;
 public class Employee {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(name = "first_name")
@@ -43,6 +43,6 @@ public class Employee {
     @ElementCollection
     private List<String> skills;
 
-    @Column(name = "deleted")
+    @Column(name = "is_deleted")
     private boolean isDeleted;
 }

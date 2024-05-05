@@ -29,11 +29,28 @@ public class EmployeeService {
 
     @Transactional
     public Employee getEmployeeById(final long id) {
-        final Optional<Employee> employee =  employeeRepository.findById(id);
+        final Optional<Employee> employee =  employeeRepository.findEmployeeById(id);
         if (employee.isPresent()) {
             return employee.get();
         }
         throw new EmployeeNotExistException("Employee with id %s not exists!".formatted(id));
+    }
+
+    @Transactional
+    public List<Employee> getAllEmployees() {
+        return employeeRepository.findAllEmployee();
+    }
+
+    @Transactional
+    public void deleteEmployee(final long id) {
+        final Optional<Employee> employeeOptional = employeeRepository.findEmployeeById(id);
+        if (employeeOptional.isPresent()) {
+            final Employee employee = employeeOptional.get();
+            employee.setDeleted(true);
+            employeeRepository.save(employee);
+        } else {
+            throw new EmployeeNotExistException("Employee with id %s not exists!".formatted(id));
+        }
     }
 
     private Employee applySparkTransformationOnSingleEmployee(final EmployeeModel employeeModel) {
